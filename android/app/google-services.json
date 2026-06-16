@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "1002879002628",
+    "project_id": "scam-vigna-ecom",
+    "storage_bucket": "scam-vigna-ecom.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1002879002628:android:565c44ebea960eccd72d51",
+        "android_client_info": {
+          "package_name": "com.antigravity.ecom.scam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1002879002628-varl77d3fg5gf1uo6bmfvfs1vf5lqd6r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTjjcrnSpkmlWVzd1AHDFzlhLZy5YVw2M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1002879002628-varl77d3fg5gf1uo6bmfvfs1vf5lqd6r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1002879002628:android:06275719592abf04d72d51",
+        "android_client_info": {
+          "package_name": "com.hello.scam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1002879002628-pj54n2pquu4q79kamgcd56q119lua19m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hello.scam",
+            "certificate_hash": "0881a57e8588fc7cdaaa9cac5fb3105ff4ed04b3"
+          }
+        },
+        {
+          "client_id": "1002879002628-varl77d3fg5gf1uo6bmfvfs1vf5lqd6r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTjjcrnSpkmlWVzd1AHDFzlhLZy5YVw2M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1002879002628-varl77d3fg5gf1uo6bmfvfs1vf5lqd6r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
