@@ -160,6 +160,20 @@ class _GroceryHomeState extends State<GroceryHome> {
                     return const Center(child: Text('No grocery items available.'));
                   }
 
+                  if (_selectedSubcategory == 'All') {
+                    final List<String> displaySubcats = ['Fruits & Vegetables', 'Dairy & Eggs', 'Bakery'];
+                    return ListView.builder(
+                      padding: const EdgeInsets.only(bottom: 24),
+                      itemCount: displaySubcats.length,
+                      itemBuilder: (context, index) {
+                        final subcat = displaySubcats[index];
+                        final subcatProducts = products.where((p) => p.subcategory == subcat).toList();
+                        if (subcatProducts.isEmpty) return const SizedBox.shrink();
+                        return _buildSubcategorySection(context, subcat, subcatProducts);
+                      },
+                    );
+                  }
+
                   return GridView.builder(
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -180,6 +194,62 @@ class _GroceryHomeState extends State<GroceryHome> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildSubcategorySection(BuildContext context, String subcat, List<Product> subcatProducts) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                subcat,
+                style: const TextStyle(
+                  fontFamily: 'Outfit',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: AppTheme.groceryPrimary,
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    _selectedSubcategory = subcat;
+                  });
+                },
+                child: const Row(
+                  children: [
+                    Text('View All', style: TextStyle(color: AppTheme.groceryPrimary, fontWeight: FontWeight.bold, fontSize: 13)),
+                    Icon(Icons.chevron_right_rounded, color: AppTheme.groceryPrimary, size: 16),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 220,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            itemCount: subcatProducts.length,
+            itemBuilder: (context, index) {
+              final product = subcatProducts[index];
+              return Padding(
+                padding: const EdgeInsets.only(right: 12.0),
+                child: SizedBox(
+                  width: 150,
+                  child: _GroceryProductCard(product: product),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

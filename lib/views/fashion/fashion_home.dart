@@ -8,7 +8,9 @@ import '../../services/database_service.dart';
 import 'fashion_detail.dart';
 
 class FashionHome extends StatefulWidget {
-  const FashionHome({Key? key}) : super(key: key);
+  final String? gender;
+
+  const FashionHome({Key? key, this.gender}) : super(key: key);
 
   @override
   State<FashionHome> createState() => _FashionHomeState();
@@ -16,12 +18,31 @@ class FashionHome extends StatefulWidget {
 
 class _FashionHomeState extends State<FashionHome> {
   String _selectedSubcategory = 'All';
-  String _selectedGender = 'All';
+  late String _selectedGender;
   final List<String> _subcategories = ['All', 'Clothing', 'Outerwear', 'Footwear', 'Accessories'];
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.gender == 'men') {
+      _selectedGender = 'Men';
+    } else if (widget.gender == 'women') {
+      _selectedGender = 'Women';
+    } else {
+      _selectedGender = 'All';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final dbService = Provider.of<DatabaseService>(context);
+    final String titleText = widget.gender == 'men'
+        ? "MEN'S BOUTIQUE"
+        : (widget.gender == 'women' ? "WOMEN'S BOUTIQUE" : "AURA BOUTIQUE");
+
+    final String bannerImage = widget.gender == 'men'
+        ? 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&auto=format&fit=crop&q=60'
+        : 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&auto=format&fit=crop&q=60';
 
     return Theme(
       data: AppTheme.lightTheme.copyWith(
@@ -46,9 +67,9 @@ class _FashionHomeState extends State<FashionHome> {
               elevation: 0,
               flexibleSpace: FlexibleSpaceBar(
                 titlePadding: const EdgeInsets.only(left: 56, bottom: 16),
-                title: const Text(
-                  'AURA BOUTIQUE',
-                  style: TextStyle(
+                title: Text(
+                  titleText,
+                  style: const TextStyle(
                     fontFamily: 'Outfit',
                     fontWeight: FontWeight.bold,
                     letterSpacing: 2.0,
@@ -60,7 +81,7 @@ class _FashionHomeState extends State<FashionHome> {
                   fit: StackFit.expand,
                   children: [
                     Image.network(
-                      'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&auto=format&fit=crop&q=60',
+                      bannerImage,
                       fit: BoxFit.cover,
                     ),
                     Container(
@@ -123,51 +144,54 @@ class _FashionHomeState extends State<FashionHome> {
               ),
             ),
 
-            // Gender target switcher (All, Men, Women)
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-                child: Row(
-                  children: ['All', 'Men', 'Women'].map((gender) {
-                    final isSelected = _selectedGender == gender;
-                    return Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                        child: ChoiceChip(
-                          label: Center(
-                            child: Text(
-                              gender,
-                              style: TextStyle(
-                                color: isSelected ? Colors.white : AppTheme.fashionPrimary,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
+            // Gender target switcher (All, Men, Women) - Hidden in dedicated sessions
+            if (widget.gender == null)
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
+                  child: Row(
+                    children: ['All', 'Men', 'Women'].map((gender) {
+                      final isSelected = _selectedGender == gender;
+                      return Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          child: ChoiceChip(
+                            label: Center(
+                              child: Text(
+                                gender,
+                                style: TextStyle(
+                                  color: isSelected ? Colors.white : AppTheme.fashionPrimary,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13,
+                                ),
                               ),
                             ),
-                          ),
-                          selected: isSelected,
-                          selectedColor: AppTheme.fashionPrimary,
-                          backgroundColor: Colors.white,
-                          onSelected: (selected) {
-                            if (selected) {
-                              setState(() {
-                                _selectedGender = gender;
-                              });
-                            }
-                          },
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            side: BorderSide(
-                              color: isSelected ? Colors.transparent : AppTheme.fashionPrimary.withOpacity(0.15),
+                            selected: isSelected,
+                            selectedColor: AppTheme.fashionPrimary,
+                            backgroundColor: Colors.white,
+                            onSelected: (selected) {
+                              if (selected) {
+                                setState(() {
+                                  _selectedGender = gender;
+                                });
+                              }
+                            },
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              side: BorderSide(
+                                color: isSelected ? Colors.transparent : AppTheme.fashionPrimary.withOpacity(0.15),
+                              ),
                             ),
+                            showCheckmark: false,
                           ),
-                          showCheckmark: false,
                         ),
-                      ),
-                    );
-                  }).toList(),
+                      );
+                    }).toList(),
+                  ),
                 ),
-              ),
-            ),
+              )
+            else
+              const SliverToBoxAdapter(child: SizedBox.shrink()),
 
             // Products Grid fetching from database service
             FutureBuilder<List<Product>>(
@@ -202,6 +226,21 @@ class _FashionHomeState extends State<FashionHome> {
                   );
                 }
 
+                if (_selectedSubcategory == 'All') {
+                  final List<String> displaySubcats = ['Clothing', 'Outerwear', 'Footwear', 'Accessories'];
+                  return SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        final subcat = displaySubcats[index];
+                        final subcatProducts = products.where((p) => p.subcategory == subcat).toList();
+                        if (subcatProducts.isEmpty) return const SizedBox.shrink();
+                        return _buildSubcategorySection(context, subcat, subcatProducts);
+                      },
+                      childCount: displaySubcats.length,
+                    ),
+                  );
+                }
+
                 return SliverPadding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   sliver: SliverGrid(
@@ -230,6 +269,63 @@ class _FashionHomeState extends State<FashionHome> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildSubcategorySection(BuildContext context, String subcat, List<Product> subcatProducts) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                subcat,
+                style: const TextStyle(
+                  fontFamily: 'Outfit',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: AppTheme.fashionPrimary,
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    _selectedSubcategory = subcat;
+                  });
+                },
+                child: const Row(
+                  children: [
+                    Text('View All', style: TextStyle(color: AppTheme.fashionPrimary, fontWeight: FontWeight.bold, fontSize: 13)),
+                    Icon(Icons.chevron_right_rounded, color: AppTheme.fashionPrimary, size: 16),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 250,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            itemCount: subcatProducts.length,
+            itemBuilder: (context, index) {
+              final product = subcatProducts[index];
+              return Padding(
+                padding: const EdgeInsets.only(right: 12.0),
+                child: SizedBox(
+                  width: 150,
+                  height: 245,
+                  child: _FashionProductCard(product: product),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

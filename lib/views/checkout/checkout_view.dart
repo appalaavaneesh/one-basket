@@ -182,6 +182,22 @@ class _CheckoutViewState extends State<CheckoutView> {
                           ),
                           const SizedBox(height: 10),
                           _PaymentOption(
+                            title: 'Net Banking',
+                            icon: Icons.account_balance_rounded,
+                            value: 'NetBanking',
+                            groupValue: _selectedPayment,
+                            onChanged: (val) => setState(() => _selectedPayment = val!),
+                          ),
+                          const SizedBox(height: 10),
+                          _PaymentOption(
+                            title: 'Mobile Wallets (Paytm / PayPal)',
+                            icon: Icons.wallet_rounded,
+                            value: 'Wallet',
+                            groupValue: _selectedPayment,
+                            onChanged: (val) => setState(() => _selectedPayment = val!),
+                          ),
+                          const SizedBox(height: 10),
+                          _PaymentOption(
                             title: 'Cash on Delivery (COD)',
                             icon: Icons.currency_rupee_rounded,
                             value: 'COD',
@@ -407,6 +423,12 @@ class _PaymentSimulationSheetState extends State<_PaymentSimulationSheet> {
   String _selectedUpiApp = 'GPay';
   bool _useUpiId = false;
 
+  // Net Banking Fields
+  String _selectedBank = 'HDFC';
+
+  // Wallet Fields
+  String _selectedWallet = 'Paytm';
+
   @override
   void initState() {
     super.initState();
@@ -429,7 +451,7 @@ class _PaymentSimulationSheetState extends State<_PaymentSimulationSheet> {
   void _startProcessing() {
     if (widget.paymentMethod == 'Card') {
       if (!_cardFormKey.currentState!.validate()) return;
-    } else {
+    } else if (widget.paymentMethod == 'UPI') {
       if (_useUpiId && !_upiFormKey.currentState!.validate()) return;
     }
 
@@ -538,6 +560,17 @@ class _PaymentSimulationSheetState extends State<_PaymentSimulationSheet> {
   }
 
   Widget _buildInputState(ThemeData theme, bool isDark) {
+    String titleText = 'Payment Details';
+    if (widget.paymentMethod == 'Card') {
+      titleText = 'Card Details';
+    } else if (widget.paymentMethod == 'UPI') {
+      titleText = 'UPI Payment';
+    } else if (widget.paymentMethod == 'NetBanking') {
+      titleText = 'Net Banking';
+    } else if (widget.paymentMethod == 'Wallet') {
+      titleText = 'Mobile Wallets';
+    }
+
     return Column(
       key: const ValueKey('input'),
       mainAxisSize: MainAxisSize.min,
@@ -547,7 +580,7 @@ class _PaymentSimulationSheetState extends State<_PaymentSimulationSheet> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              widget.paymentMethod == 'Card' ? 'Card Details' : 'UPI Payment',
+              titleText,
               style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             IconButton(
@@ -559,8 +592,12 @@ class _PaymentSimulationSheetState extends State<_PaymentSimulationSheet> {
         const SizedBox(height: 16),
         if (widget.paymentMethod == 'Card')
           _buildCardForm(theme, isDark)
-        else
-          _buildUpiForm(theme, isDark),
+        else if (widget.paymentMethod == 'UPI')
+          _buildUpiForm(theme, isDark)
+        else if (widget.paymentMethod == 'NetBanking')
+          _buildNetBankingForm(theme, isDark)
+        else if (widget.paymentMethod == 'Wallet')
+          _buildWalletForm(theme, isDark),
         const SizedBox(height: 24),
         ElevatedButton(
           onPressed: _startProcessing,
@@ -574,6 +611,149 @@ class _PaymentSimulationSheetState extends State<_PaymentSimulationSheet> {
                 : 'Proceed to Pay ₹${widget.totalAmount.toStringAsFixed(2)}',
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildNetBankingForm(ThemeData theme, bool isDark) {
+    final banks = [
+      {'name': 'SBI', 'icon': Icons.account_balance_rounded},
+      {'name': 'HDFC', 'icon': Icons.account_balance_rounded},
+      {'name': 'ICICI', 'icon': Icons.account_balance_rounded},
+      {'name': 'Axis', 'icon': Icons.account_balance_rounded},
+      {'name': 'Kotak', 'icon': Icons.account_balance_rounded},
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text(
+          'Select your Bank',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.grey),
+        ),
+        const SizedBox(height: 12),
+        GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio: 2.8,
+          ),
+          itemCount: banks.length,
+          itemBuilder: (context, index) {
+            final bank = banks[index];
+            final name = bank['name'] as String;
+            final isSelected = _selectedBank == name;
+
+            return InkWell(
+              onTap: () {
+                setState(() {
+                  _selectedBank = name;
+                });
+              },
+              borderRadius: BorderRadius.circular(12),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: isSelected 
+                      ? theme.colorScheme.primary.withOpacity(0.08) 
+                      : (isDark ? Colors.white.withOpacity(0.03) : Colors.grey[50]),
+                  border: Border.all(
+                    color: isSelected ? theme.colorScheme.primary : theme.colorScheme.onSurface.withOpacity(0.08),
+                    width: isSelected ? 1.5 : 1,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: [
+                    Icon(bank['icon'] as IconData, color: isSelected ? theme.colorScheme.primary : Colors.grey),
+                    const SizedBox(width: 12),
+                    Text(
+                      name,
+                      style: TextStyle(
+                        fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                        color: isSelected ? theme.colorScheme.primary : null,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildWalletForm(ThemeData theme, bool isDark) {
+    final wallets = [
+      {'name': 'Paytm', 'icon': Icons.wallet_rounded},
+      {'name': 'PayPal', 'icon': Icons.wallet_rounded},
+      {'name': 'Amazon Pay', 'icon': Icons.wallet_rounded},
+      {'name': 'PhonePe', 'icon': Icons.wallet_rounded},
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text(
+          'Select your Wallet',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.grey),
+        ),
+        const SizedBox(height: 12),
+        GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio: 2.8,
+          ),
+          itemCount: wallets.length,
+          itemBuilder: (context, index) {
+            final wallet = wallets[index];
+            final name = wallet['name'] as String;
+            final isSelected = _selectedWallet == name;
+
+            return InkWell(
+              onTap: () {
+                setState(() {
+                  _selectedWallet = name;
+                });
+              },
+              borderRadius: BorderRadius.circular(12),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: isSelected 
+                      ? theme.colorScheme.primary.withOpacity(0.08) 
+                      : (isDark ? Colors.white.withOpacity(0.03) : Colors.grey[50]),
+                  border: Border.all(
+                    color: isSelected ? theme.colorScheme.primary : theme.colorScheme.onSurface.withOpacity(0.08),
+                    width: isSelected ? 1.5 : 1,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: [
+                    Icon(wallet['icon'] as IconData, color: isSelected ? theme.colorScheme.primary : Colors.grey),
+                    const SizedBox(width: 12),
+                    Text(
+                      name,
+                      style: TextStyle(
+                        fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                        color: isSelected ? theme.colorScheme.primary : null,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
         ),
       ],
     );

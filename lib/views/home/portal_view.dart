@@ -311,20 +311,43 @@ class _PortalHome extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           sliver: SliverList(
             delegate: SliverChildListDelegate([
-              // FASHION CATEGORY CARD
-              _CategoryPortalCard(
-                title: 'Fashion Hub',
-                subtitle: 'Sleek, Modern, Styled Collection',
-                promoText: 'New Arrivals',
-                color: AppTheme.fashionPrimary,
-                bgImage: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&auto=format&fit=crop&q=60',
-                icon: Icons.checkroom_rounded,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const FashionHome()),
-                  );
-                },
+              // FASHION CATEGORIES ROW (Separate sessions for Men & Women)
+              Row(
+                children: [
+                  Expanded(
+                    child: _CategoryPortalCard(
+                      title: "Men's Wear",
+                      subtitle: "Modern tailoring",
+                      promoText: "Men's Style",
+                      color: AppTheme.fashionPrimary,
+                      bgImage: 'https://images.unsplash.com/photo-1488161628813-04466f872be2?w=600&auto=format&fit=crop&q=60',
+                      icon: Icons.man_rounded,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const FashionHome(gender: 'men')),
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: _CategoryPortalCard(
+                      title: "Women's Wear",
+                      subtitle: "Chic curation",
+                      promoText: "Women's Style",
+                      color: AppTheme.fashionPrimary,
+                      bgImage: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&auto=format&fit=crop&q=60',
+                      icon: Icons.woman_rounded,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const FashionHome(gender: 'women')),
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 16),
 

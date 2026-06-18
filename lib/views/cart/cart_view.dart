@@ -173,6 +173,17 @@ class _CartViewState extends State<CartView> {
                           width: 80,
                           height: 80,
                           fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Container(
+                              width: 80,
+                              height: 80,
+                              color: theme.colorScheme.primary.withOpacity(0.05),
+                              child: Icon(
+                                Icons.image_not_supported_outlined,
+                                color: theme.colorScheme.primary.withOpacity(0.5),
+                              ),
+                            );
+                          },
                         ),
                       ),
                       const SizedBox(width: 12),
@@ -241,6 +252,7 @@ class _CartViewState extends State<CartView> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Row(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 InkWell(
                                   onTap: () => cart.updateQuantity(item, -1),
@@ -428,11 +440,72 @@ class _CartViewState extends State<CartView> {
                     );
                   },
                 ),
+                const SizedBox(height: 20),
+                const Center(
+                  child: Text(
+                    'WE ACCEPT',
+                    style: TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.5,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _buildPaymentBadge(context, Icons.credit_card_rounded, 'Cards'),
+                      _buildPaymentBadge(context, Icons.account_balance_wallet_outlined, 'UPI'),
+                      _buildPaymentBadge(context, Icons.account_balance_rounded, 'Net Banking'),
+                      _buildPaymentBadge(context, Icons.wallet_rounded, 'Wallets'),
+                      _buildPaymentBadge(context, Icons.currency_rupee_rounded, 'COD'),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildPaymentBadge(BuildContext context, IconData icon, String label) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: isDark ? Colors.white.withOpacity(0.05) : Colors.grey[100],
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: isDark ? Colors.white.withOpacity(0.1) : Colors.grey[300]!,
+              width: 1,
+            ),
+          ),
+          child: Icon(
+            icon,
+            size: 20,
+            color: theme.colorScheme.primary,
+          ),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 9,
+            fontWeight: FontWeight.w600,
+            color: isDark ? Colors.grey[400] : Colors.grey[600],
+          ),
+        ),
+      ],
     );
   }
 }
