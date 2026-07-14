@@ -83,6 +83,12 @@ class _FashionHomeState extends State<FashionHome> {
                     Image.network(
                       bannerImage,
                       fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) => Container(
+                        color: Colors.grey[800],
+                        child: const Center(
+                          child: Icon(Icons.broken_image_outlined, color: Colors.white24, size: 40),
+                        ),
+                      ),
                     ),
                     Container(
                       color: Colors.black.withOpacity(0.6),
@@ -374,6 +380,17 @@ class _FashionProductCard extends StatelessWidget {
                       width: double.infinity,
                       height: double.infinity,
                       fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) => Container(
+                        color: Colors.grey[100],
+                        child: const Center(
+                          child: Icon(Icons.broken_image_outlined, color: Colors.grey, size: 32),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 10,
+                      left: 10,
+                      child: FavoriteButton(product: product, size: 14),
                     ),
                     Positioned(
                       top: 10,

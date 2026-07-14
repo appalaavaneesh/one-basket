@@ -123,22 +123,22 @@ class AppConstants {
       
       if (i < 20) {
         subcat = 'Clothing';
-        name = '${menBrands[i % menBrands.length]} ${menClothingTypes[i % menClothingTypes.length]}';
+        name = '${menBrands[i % menBrands.length]} ${menClothingTypes[(i * 3) % menClothingTypes.length]}';
         img = menClothingImgs[i % menClothingImgs.length];
         price = 799.0 + (i * 90);
       } else if (i < 30) {
         subcat = 'Outerwear';
-        name = '${menBrands[i % menBrands.length]} ${menOuterwearTypes[i % menOuterwearTypes.length]}';
+        name = '${menBrands[i % menBrands.length]} ${menOuterwearTypes[(i * 3) % menOuterwearTypes.length]}';
         img = menOuterwearImgs[i % menOuterwearImgs.length];
         price = 1999.0 + (i * 150);
       } else if (i < 40) {
         subcat = 'Footwear';
-        name = '${menBrands[i % menBrands.length]} ${menFootwearTypes[i % menFootwearTypes.length]}';
+        name = '${menBrands[i % menBrands.length]} ${menFootwearTypes[(i * 3) % menFootwearTypes.length]}';
         img = menFootwearImgs[i % menFootwearImgs.length];
         price = 1499.0 + (i * 120);
       } else {
         subcat = 'Accessories';
-        name = '${menBrands[i % menBrands.length]} ${menAccessoryTypes[i % menAccessoryTypes.length]}';
+        name = '${menBrands[i % menBrands.length]} ${menAccessoryTypes[(i * 3) % menAccessoryTypes.length]}';
         img = menAccessoryImgs[i % menAccessoryImgs.length];
         price = 599.0 + (i * 110);
       }
@@ -170,22 +170,22 @@ class AppConstants {
       
       if (i < 20) {
         subcat = 'Clothing';
-        name = '${womenBrands[i % womenBrands.length]} ${womenClothingTypes[i % womenClothingTypes.length]}';
+        name = '${womenBrands[i % womenBrands.length]} ${womenClothingTypes[(i * 3) % womenClothingTypes.length]}';
         img = womenClothingImgs[i % womenClothingImgs.length];
         price = 899.0 + (i * 85);
       } else if (i < 30) {
         subcat = 'Outerwear';
-        name = '${womenBrands[i % womenBrands.length]} ${womenOuterwearTypes[i % womenOuterwearTypes.length]}';
+        name = '${womenBrands[i % womenBrands.length]} ${womenOuterwearTypes[(i * 3) % womenOuterwearTypes.length]}';
         img = womenOuterwearImgs[i % womenOuterwearImgs.length];
         price = 2299.0 + (i * 180);
       } else if (i < 40) {
         subcat = 'Footwear';
-        name = '${womenBrands[i % womenBrands.length]} ${womenFootwearTypes[i % womenFootwearTypes.length]}';
+        name = '${womenBrands[i % womenBrands.length]} ${womenFootwearTypes[(i * 3) % womenFootwearTypes.length]}';
         img = womenFootwearImgs[i % womenFootwearImgs.length];
         price = 1299.0 + (i * 110);
       } else {
         subcat = 'Accessories';
-        name = '${womenBrands[i % womenBrands.length]} ${womenAccessoryTypes[i % womenAccessoryTypes.length]}';
+        name = '${womenBrands[i % womenBrands.length]} ${womenAccessoryTypes[(i * 3) % womenAccessoryTypes.length]}';
         img = womenAccessoryImgs[i % womenAccessoryImgs.length];
         price = 699.0 + (i * 130);
       }
@@ -274,7 +274,7 @@ class AppConstants {
       int itemsCount = (subcat == 'Burgers' || subcat == 'Pizza' || subcat == 'Indian Bowls' || subcat == 'Beverages') ? 13 : 12;
       
       for (int i = 0; i < itemsCount; i++) {
-        final name = '${prefix[(i + idCount) % prefix.length]} ${templates[i % templates.length]}';
+        final name = '${prefix[(i + idCount) % prefix.length]} ${templates[(i * 5) % templates.length]}';
         final price = 120.0 + ((i + idCount) % 15) * 40;
         
         list.add(Product(
@@ -360,7 +360,7 @@ class AppConstants {
       int itemsCount = (subcat == 'Fruits & Vegetables' || subcat == 'Dairy & Eggs' || subcat == 'Oils & Spices' || subcat == 'Snacks & Nuts') ? 17 : 16;
       
       for (int i = 0; i < itemsCount; i++) {
-        final name = '${prefix[(i + idCount) % prefix.length]} ${templates[i % templates.length]}';
+        final name = '${prefix[(i + idCount) % prefix.length]} ${templates[(i * 3) % templates.length]}';
         final price = 50.0 + ((i + idCount) % 12) * 50;
         
         list.add(Product(

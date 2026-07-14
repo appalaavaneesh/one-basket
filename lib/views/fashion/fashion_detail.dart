@@ -66,12 +66,24 @@ class _FashionDetailState extends State<FashionDetail> {
                     pinned: true,
                     backgroundColor: Colors.white,
                     elevation: 0,
+                    actions: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 12.0),
+                        child: FavoriteButton(product: widget.product, size: 20),
+                      ),
+                    ],
                     flexibleSpace: FlexibleSpaceBar(
                       background: Hero(
                         tag: 'product_image_${widget.product.id}',
                         child: Image.network(
                           widget.product.imageUrl,
                           fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) => Container(
+                            color: Colors.grey[100],
+                            child: const Center(
+                              child: Icon(Icons.broken_image_outlined, color: Colors.grey, size: 48),
+                            ),
+                          ),
                         ),
                       ),
                     ),

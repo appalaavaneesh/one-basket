@@ -68,6 +68,14 @@ class _GroceryDetailState extends State<GroceryDetail> {
                           widget.product.imageUrl,
                           height: 240,
                           fit: BoxFit.contain,
+                          errorBuilder: (context, error, stackTrace) => Container(
+                            height: 240,
+                            width: 240,
+                            color: Colors.grey[100],
+                            child: const Center(
+                              child: Icon(Icons.broken_image_outlined, color: Colors.grey, size: 48),
+                            ),
+                          ),
                         ),
                       ),
                     ),

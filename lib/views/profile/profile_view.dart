@@ -279,16 +279,16 @@ class ProfileView extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // 2. Quick Action Grid Cards (Orders, Wishlist, Coupons, Help)
+            // 2. Quick Action Grid Cards (Orders, Coupons, Help)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: GridView.count(
-                crossAxisCount: 4,
+                crossAxisCount: 3,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 10,
-                childAspectRatio: 0.95,
+                childAspectRatio: 1.15,
                 children: [
                   _buildQuickActionCard(
                     context: context,
@@ -296,15 +296,6 @@ class ProfileView extends StatelessWidget {
                     label: 'Orders',
                     color: Colors.blue,
                     onTap: () => _showOrderHistoryBottomSheet(context, db, user?.uid ?? 'guest_user', isDark, theme),
-                  ),
-                  _buildQuickActionCard(
-                    context: context,
-                    icon: Icons.favorite_border_rounded,
-                    label: 'Wishlist',
-                    color: Colors.red,
-                    onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Wishlist functionality coming soon!')),
-                    ),
                   ),
                   _buildQuickActionCard(
                     context: context,
@@ -446,7 +437,6 @@ class ProfileView extends StatelessWidget {
                       onTap: () {},
                       theme: theme,
                     ),
-                    const Divider(height: 1),
                     _buildSettingsTile(
                       icon: Icons.location_on_outlined,
                       title: 'Saved Addresses',
@@ -454,7 +444,6 @@ class ProfileView extends StatelessWidget {
                       onTap: () {},
                       theme: theme,
                     ),
-                    const Divider(height: 1),
                     _buildSettingsTile(
                       icon: Icons.translate_rounded,
                       title: 'Select Language',
@@ -462,7 +451,6 @@ class ProfileView extends StatelessWidget {
                       onTap: () {},
                       theme: theme,
                     ),
-                    const Divider(height: 1),
                     _buildSettingsTile(
                       icon: Icons.notifications_none_rounded,
                       title: 'Notification Settings',
@@ -470,7 +458,6 @@ class ProfileView extends StatelessWidget {
                       onTap: () {},
                       theme: theme,
                     ),
-                    const Divider(height: 1),
                     _buildSettingsTile(
                       icon: Icons.admin_panel_settings_rounded,
                       title: 'Admin Dashboard',
@@ -512,7 +499,6 @@ class ProfileView extends StatelessWidget {
                       onTap: () {},
                       theme: theme,
                     ),
-                    const Divider(height: 1),
                     _buildSettingsTile(
                       icon: Icons.chat_bubble_outline_rounded,
                       title: 'Questions & Answers',

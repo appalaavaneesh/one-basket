@@ -47,12 +47,6 @@ class _FoodHomeState extends State<FoodHome> {
             ),
           ),
           centerTitle: true,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.favorite_border_rounded, color: AppTheme.foodPrimary),
-              onPressed: () {},
-            ),
-          ],
         ),
         body: Column(
           children: [
@@ -290,6 +284,12 @@ class _FoodProductCard extends StatelessWidget {
                     Image.network(
                       product.imageUrl,
                       fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) => Container(
+                        color: Colors.grey[100],
+                        child: const Center(
+                          child: Icon(Icons.broken_image_outlined, color: Colors.grey, size: 32),
+                        ),
+                      ),
                     ),
                     Positioned(
                       top: 12,

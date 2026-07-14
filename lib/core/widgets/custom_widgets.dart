@@ -1,5 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../models/product_model.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
@@ -227,6 +229,94 @@ class GlassContainer extends StatelessWidget {
             ),
           ),
           child: child,
+        ),
+      ),
+    );
+  }
+}
+
+class FavoriteButton extends StatefulWidget {
+  final Product product;
+  final double size;
+
+  const FavoriteButton({
+    Key? key,
+    required this.product,
+    this.size = 16,
+  }) : super(key: key);
+
+  @override
+  State<FavoriteButton> createState() => _FavoriteButtonState();
+}
+
+class _FavoriteButtonState extends State<FavoriteButton> {
+  bool _isFavorite = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFavoriteStatus();
+  }
+
+  Future<void> _loadFavoriteStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    final favorites = prefs.getStringList('fashion_favorites') ?? [];
+    if (mounted) {
+      setState(() {
+        _isFavorite = favorites.contains(widget.product.id);
+      });
+    }
+  }
+
+  Future<void> _toggleFavorite() async {
+    final prefs = await SharedPreferences.getInstance();
+    final favorites = prefs.getStringList('fashion_favorites') ?? [];
+    setState(() {
+      _isFavorite = !_isFavorite;
+    });
+    if (_isFavorite) {
+      favorites.add(widget.product.id);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${widget.product.name} added to favorites!'),
+          duration: const Duration(milliseconds: 1000),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    } else {
+      favorites.remove(widget.product.id);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${widget.product.name} removed from favorites!'),
+          duration: const Duration(milliseconds: 1000),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    }
+    await prefs.setStringList('fashion_favorites', favorites);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: _toggleFavorite,
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.9),
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Icon(
+          _isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+          color: Colors.red,
+          size: widget.size,
         ),
       ),
     );

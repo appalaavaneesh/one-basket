@@ -300,6 +300,12 @@ class _GroceryProductCard extends StatelessWidget {
                     child: Image.network(
                       product.imageUrl,
                       fit: BoxFit.contain,
+                      errorBuilder: (context, error, stackTrace) => Container(
+                        color: Colors.white,
+                        child: const Center(
+                          child: Icon(Icons.broken_image_outlined, color: Colors.grey, size: 32),
+                        ),
+                      ),
                     ),
                   ),
                 ),

@@ -58,6 +58,12 @@ class _FoodDetailState extends State<FoodDetail> {
                         child: Image.network(
                           widget.product.imageUrl,
                           fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) => Container(
+                            color: Colors.grey[100],
+                            child: const Center(
+                              child: Icon(Icons.broken_image_outlined, color: Colors.grey, size: 48),
+                            ),
+                          ),
                         ),
                       ),
                     ),

@@ -79,7 +79,7 @@ void main() async {
     // Run catalog migration to sync INR prices and new products to Firestore
     try {
       final prefs = await SharedPreferences.getInstance();
-      const targetVersion = 3;
+      const targetVersion = 4;
       final currentVersion = prefs.getInt('firestore_products_version') ?? 0;
       if (currentVersion < targetVersion) {
         print('Aura E-Commerce: Migrating Firestore products to Version $targetVersion...');

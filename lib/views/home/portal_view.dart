@@ -437,6 +437,12 @@ class _CategoryPortalCard extends StatelessWidget {
               width: double.infinity,
               height: double.infinity,
               fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => Container(
+                color: Colors.grey[800],
+                child: const Center(
+                  child: Icon(Icons.broken_image_outlined, color: Colors.white24, size: 40),
+                ),
+              ),
             ),
             // Black overlay for legibility
             Container(
@@ -479,13 +485,17 @@ class _CategoryPortalCard extends StatelessWidget {
                     children: [
                       Icon(icon, color: Colors.white, size: 24),
                       const SizedBox(width: 8),
-                      Text(
-                        title,
-                        style: const TextStyle(
-                          fontFamily: 'Outfit',
-                          color: Colors.white,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
+                      Expanded(
+                        child: Text(
+                          title,
+                          style: const TextStyle(
+                            fontFamily: 'Outfit',
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],
@@ -496,6 +506,8 @@ class _CategoryPortalCard extends StatelessWidget {
                       color: Colors.white.withOpacity(0.8),
                       fontSize: 13,
                     ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
@@ -592,7 +604,7 @@ void _showNotificationsBottomSheet(BuildContext context, List<dynamic> docs) {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              'Broadcast alerts from the Basket Manager app will appear here.',
+                              'Broadcast alerts from the One Basket app will appear here.',
                               textAlign: TextAlign.center,
                               style: theme.textTheme.bodyMedium?.copyWith(
                                 color: theme.colorScheme.onSurface.withOpacity(0.5),
@@ -821,6 +833,12 @@ class _GlobalSearchTabState extends State<_GlobalSearchTab> {
                                     width: 60,
                                     height: 60,
                                     fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) => Container(
+                                      width: 60,
+                                      height: 60,
+                                      color: Colors.grey[100],
+                                      child: const Icon(Icons.broken_image_outlined, color: Colors.grey, size: 20),
+                                    ),
                                   ),
                                 ),
                                 title: Text(
