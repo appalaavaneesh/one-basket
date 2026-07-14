@@ -38,7 +38,7 @@ class _GroceryHomeState extends State<GroceryHome> {
           backgroundColor: AppTheme.groceryBg,
           elevation: 0,
           title: const Text(
-            'AURA FRESH',
+            'ONE BASKET FRESH',
             style: TextStyle(
               fontFamily: 'Outfit',
               fontWeight: FontWeight.bold,

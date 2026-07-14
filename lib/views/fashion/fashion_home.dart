@@ -38,7 +38,7 @@ class _FashionHomeState extends State<FashionHome> {
     final dbService = Provider.of<DatabaseService>(context);
     final String titleText = widget.gender == 'men'
         ? "MEN'S BOUTIQUE"
-        : (widget.gender == 'women' ? "WOMEN'S BOUTIQUE" : "AURA BOUTIQUE");
+        : (widget.gender == 'women' ? "WOMEN'S BOUTIQUE" : "ONE BASKET BOUTIQUE");
 
     final String bannerImage = widget.gender == 'men'
         ? 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&auto=format&fit=crop&q=60'

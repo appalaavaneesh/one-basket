@@ -263,7 +263,7 @@ class _PortalHome extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: const Text(
-                                'AURA EXCLUSIVE',
+                                'ONE BASKET EXCLUSIVE',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 10,
@@ -274,14 +274,14 @@ class _PortalHome extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              'Get 20% Off Aura Brands',
+                              'Get 20% Off One Basket Brands',
                               style: theme.textTheme.titleMedium?.copyWith(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             Text(
-                              'Use code AURA20 at checkout',
+                              'Use code ONE20 at checkout',
                               style: theme.textTheme.bodyMedium?.copyWith(
                                 fontSize: 13,
                               ),
@@ -810,7 +810,7 @@ class _GlobalSearchTabState extends State<_GlobalSearchTab> {
                             Icon(Icons.search_rounded, size: 64, color: theme.colorScheme.onSurface.withOpacity(0.2)),
                             const SizedBox(height: 12),
                             Text(
-                              'Search Aura Catalog',
+                              'Search One Basket Catalog',
                               style: TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.5)),
                             ),
                           ],

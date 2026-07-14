@@ -129,7 +129,7 @@ class _GroceryDetailState extends State<GroceryDetail> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: const [
                                 Text(
-                                  'Aura Fresh Certified',
+                                  'One Basket Fresh Certified',
                                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppTheme.groceryPrimary),
                                 ),
                                 Text(

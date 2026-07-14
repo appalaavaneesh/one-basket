@@ -38,7 +38,7 @@ class _CartViewState extends State<CartView> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Invalid Promo Code. Try "AURA20" or "WELCOME10".'),
+          content: Text('Invalid Promo Code. Try "ONE20" or "WELCOME10".'),
           backgroundColor: Colors.red,
         ),
       );
@@ -312,7 +312,7 @@ class _CartViewState extends State<CartView> {
                         child: TextField(
                           controller: _promoController,
                           decoration: InputDecoration(
-                            hintText: 'Enter Promo Code (e.g. AURA20)',
+                            hintText: 'Enter Promo Code (e.g. ONE20)',
                             hintStyle: TextStyle(fontSize: 12, color: Colors.grey[400]),
                             contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                             filled: true,

@@ -1025,7 +1025,7 @@ class _PaymentSimulationSheetState extends State<_PaymentSimulationSheet> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                'Aura Pay',
+                'One Basket Pay',
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,

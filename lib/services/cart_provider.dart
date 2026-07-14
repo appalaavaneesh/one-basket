@@ -103,8 +103,8 @@ class CartProvider with ChangeNotifier {
 
   bool applyPromoCode(String code) {
     final cleanCode = code.trim().toUpperCase();
-    if (cleanCode == 'AURA20') {
-      _appliedPromoCode = 'AURA20';
+    if (cleanCode == 'AURA20' || cleanCode == 'ONE20') {
+      _appliedPromoCode = cleanCode;
       _promoDiscountPercentage = 20.0;
       notifyListeners();
       return true;

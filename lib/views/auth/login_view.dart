@@ -218,22 +218,31 @@ class _LoginViewState extends State<LoginView> {
                           child: Hero(
                             tag: 'app_logo',
                             child: Container(
-                              padding: const EdgeInsets.all(16),
+                              width: 90,
+                              height: 90,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: theme.colorScheme.primary.withOpacity(0.05),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.05),
+                                    blurRadius: 10,
+                                    offset: const Offset(0, 4),
+                                  ),
+                                ],
                               ),
-                              child: Icon(
-                                Icons.auto_awesome_rounded,
-                                size: 48,
-                                color: theme.colorScheme.primary,
+                              child: ClipOval(
+                                child: Image.asset(
+                                  'assets/logo.png',
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                           ),
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          'Welcome to Aura',
+                          'Welcome to One Basket',
                           style: theme.textTheme.titleLarge?.copyWith(
                             fontSize: 28,
                             fontWeight: FontWeight.bold,

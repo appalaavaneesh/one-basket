@@ -38,7 +38,7 @@ class _FoodHomeState extends State<FoodHome> {
           backgroundColor: AppTheme.foodBg,
           elevation: 0,
           title: const Text(
-            'AURA EATS',
+            'ONE BASKET EATS',
             style: TextStyle(
               fontFamily: 'Outfit',
               fontWeight: FontWeight.bold,
